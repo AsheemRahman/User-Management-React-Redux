@@ -13,7 +13,21 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
 
     const handleAddUser = async (e) => {
         e.preventDefault();
+        if (!userName || userName.trim().length <= 4) {
+            toast.error("Name is required and must be longer than 4 characters");
+            return;
+        }
+        if (!userEmail || !/\S+@\S+\.\S+/.test(userEmail)) {
+            toast.error("Email Required and Valid email is required");
+            return;
+        }
+        if (password && !validatePassword(password)) {
+            toast.error("Password does not meet the required policies");
+            return;
+        }
+
         const newUser = { userName, userEmail, password, };
+
         try {
             const response = await fetch('/api/admin/adduser', {
                 method: 'POST',
@@ -37,6 +51,11 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
             console.error('Error adding user:', error.message);
             toast.error(`Error: ${error.message}`);
         }
+    };
+
+    const validatePassword = (password) => {
+        const passwordPolicy = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+        return passwordPolicy.test(password);
     };
 
     return (
@@ -78,7 +97,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
                                     className="block w-full mt-1 p-2 border rounded-lg"
                                     placeholder="Enter password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}/>
+                                    onChange={(e) => setPassword(e.target.value)} />
                             </div>
                             <div className="flex justify-between">
                                 <button
