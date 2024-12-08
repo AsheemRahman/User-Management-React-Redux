@@ -25,9 +25,7 @@ export default function Adminhome() {
     const getUserList = async () => {
         try {
             const res = await fetch('/api/admin/getuser');
-            console.log(res)
             const data = await res.json();
-            console.log(data)
             if (data && data.users) {
                 const validUsers = data.users.filter((user) => user && user.name && user.email);
                 dispatch(addUser(validUsers));
