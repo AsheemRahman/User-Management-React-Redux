@@ -6,7 +6,7 @@ import SignUp from './pages/User/SignUp';
 import Profile from './pages/User/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import AdminRoute from './components/adminRoute';
+import AdminRoute from './components/AdminRoute';
 import Adminhome from './pages/Admin/Adminhome';
 import Adminlogin from './pages/Admin/Adminlogin';
 import { ToastContainer } from "react-toastify";
